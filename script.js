@@ -42,9 +42,21 @@ var MovieDescription = React.createClass({
     },
     render: function () {
         return (
-            React.createElement('p', {}, this.props.movie.id)
+            React.createElement('p', {}, this.props.movie.desc)
         );
     }
+});
+
+var MoviePoster = React.createClass({
+    propTypes: {
+        movie: React.PropTypes.object.isRequired
+    },
+    render: function (){
+        return (
+            React.createElement('img', {src: this.props.movie.src, height: 100, width: 100})
+        )
+    }
+
 });
 
 var Movie = React.createClass({
@@ -53,17 +65,19 @@ var Movie = React.createClass({
     },
     render: function () {
         return (
-            React.createElement('li', {},
-            React.createElement('h2', {}, this.props.movie.title),
-            React.createElement('p', {}, this.props.movie.desc)
+            React.createElement('li', {key: this.props.movie.id},
+                React.createElement(MovieTitle, {movie: this.props.movie}),
+                React.createElement(MovieDescription, {movie: this.props.movie}),
+                React.createElement(MoviePoster, {movie: this.props.movie})
+            )
         )
-        );
     }
 });
 
 var moviesElements = movies.map(function (movie) {
-    return React.createElement(Movie, {key: movie.id, movie: movie})
-
+    return (
+        React.createElement(Movie, {key: movie.id, movie: movie})
+    )
 });
 
 var element =
